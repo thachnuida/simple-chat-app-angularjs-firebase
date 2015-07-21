@@ -1,0 +1,34 @@
+<div class="row app-body chat-wrap">
+  <div class="user" ng-if="!readyToChat && !username">
+    <input class="input-username" type="text" ng-model="username" ng-enter="setUsername(username)" placeholder="Your user name"/>
+    <br/>
+    <button class="btn-set-name" ng-click="setUsername(username)">Set my name</button>
+    <p>Send this page URL to your friend, so that you can chat together.</p>
+  </div>
+
+  <div ng-if="readyToChat">
+    <div class="user-list">
+      <span ng-if="roomMembers.length < 2">Waiting for your friend ...</span>
+      <span ng-if="roomMembers.length >= 2 && member.$value !== username" ng-repeat="member in roomMembers">@{{member.$value}}</span>
+    </div>
+
+    <div class="row message-list">
+      <perfect-scrollbar class="scroller" scroll-glue wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20">
+        <div ng-repeat="message in roomMessages" class="message-item" ng-class="{'me': message.user === username, 'other': message.user !== username}">
+          <span class="message-item-user">{{message.user}}</span>
+          <span class="message-item-time">{{message.createdAt  | date:'medium'}}</span><br/>
+          <span class="message-item-body">{{message.body}}</span>
+        </div>
+      </perfect-scrollbar>
+    </div>
+
+    <div class="row message-form">
+      <table>
+        <tr>
+          <td><div class="input-message-wrap"><textarea ng-model="messageBody.value" class="input-message" ng-enter="addMessage(messageBody.value)"></textarea></div></td>
+          <td class="td-width-0"><button class="btn-send" ng-click="addMessage(messageBody.value)">Send</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
