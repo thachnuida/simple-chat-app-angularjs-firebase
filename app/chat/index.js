@@ -34,7 +34,6 @@ angular.module('myApp.chat', ['ngRoute'])
 
     // Verify room is available
     roomMembers.$loaded().then(function() {
-      console.log('loaded record', roomMembers);
       if (roomMembers.length >= 2) {
         alert('Room is full!');
         $location.url('/');
@@ -55,7 +54,6 @@ angular.module('myApp.chat', ['ngRoute'])
       roomMembers.$add($scope.username).then(function(ref) {
         currentUser = ref;
         $scope.readyToChat = true;
-        console.log($scope.roomMembers.length);
       });
     };
 
